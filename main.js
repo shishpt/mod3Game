@@ -27,7 +27,7 @@ let moveList = [fireball, sword];
 
 let attackingTurn = true;
 
-attack = (attacking, defending, move) => {
+const attack = (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
 
@@ -45,48 +45,58 @@ attack = (attacking, defending, move) => {
   attackingTurn = !attackingTurn;
 };
 
-while (player.hp > 0 && enemy.hp > 0) {
-  // still playing
-  if (attackingTurn) {
-    console.log(`${player.name}'s turn to attack`);
-    let userSelect = prompt(
-      `    1. Fireball
-        2. Sword`
-    );
-    let chosenMove = parseInt(userSelect) - 1;
-    attack(player, enemy, moveList[chosenMove]);
-    // stop here and have the user choose what to do
-  } else {
-    console.log(`${enemy.name}'s turn to attack`);
-    attack(enemy, player, moveList[0]);
-  }
-}
-if (player.hp <= 0) {
-  console.log("You died!");
-}
-if (enemy.hp <= 0) {
-  console.log("You won!");
-}
+const fireballBtn = document.getElementById("fireball");
+const swordBtn = document.getElementById("sword");
+const nextBtn = document.getElementById("next");
 
-// if (player.hp > 0 && enemy.hp > 0) {
-//   // still playing
-//   if (attackingTurn) {
-//     console.log(`${player.name}'s turn to attack`);
-//     console.log("1. Fireball");
-//     console.log("2. Run away");
-//     let userSelect = prompt("Choose what to do");
-//     let chosenMove = parseInt(userSelect) - 1;
-//     attack(player, enemy, moveList[chosenMove]);
-//     // stop here and have the user choose what to do
-//   } else {
-//     console.log(`${enemy.name}'s turn to attack`);
-//     attack(enemy, player, moveList[0]);
-//   }
-// } else {
-//   // either one has died
-//   if (player.hp <= 0) {
-//     console.log("You died!");
-//   } else {
-//     console.log("You won!");
-//   }
-// }
+const startGame = () => {
+  fireballBtn.disabled = false;
+  swordBtn.disabled = false;
+  nextBtn.disabled = true;
+  console.log(`Please select an action`);
+};
+
+fireballBtn.addEventListener("click", () => {
+  executingSelectedAction(0);
+  fireballBtn.disabled = true;
+  swordBtn.disabled = true;
+  nextBtn.disabled = false;
+});
+swordBtn.addEventListener("click", () => {
+  executingSelectedAction(1);
+  fireballBtn.disabled = true;
+  swordBtn.disabled = true;
+  nextBtn.disabled = false;
+});
+nextBtn.addEventListener("click", () => {
+  executingSelectedAction(0);
+  fireballBtn.disabled = false;
+  swordBtn.disabled = false;
+  nextBtn.disabled = true;
+});
+const executingSelectedAction = (selectedAction) => {
+  if (player.hp > 0 && enemy.hp > 0) {
+    // still playing
+    if (attackingTurn) {
+      fireballBtn.disabled = false;
+      swordBtn.disabled = false;
+      nextBtn.disabled = true;
+      console.log(`${player.name}'s turn to attack`);
+      attack(player, enemy, moveList[selectedAction]); // Selected action is defined on each button
+    } else {
+      fireballBtn.disabled = true;
+      swordBtn.disabled = true;
+      nextBtn.disabled = false;
+      console.log(`${enemy.name}'s turn to attack`);
+      attack(enemy, player, moveList[0]);
+    }
+    if (player.hp <= 0) {
+      console.log("You died!");
+    }
+    if (enemy.hp <= 0) {
+      console.log("You won!");
+    }
+  }
+};
+
+startGame();
