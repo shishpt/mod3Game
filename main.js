@@ -115,7 +115,10 @@ const attack = async (attacking, defending, move) => {
   console.log(`-------------------------------------------`);
 
   attackingTurn = !attackingTurn;
-
+  
+  playerHealth.setValue(player.hp);
+  enemyHealth.setValue(enemy.hp);
+  
   moveCount++;
   moveCounter.innerText = moveCount;
 };
@@ -155,5 +158,59 @@ const executingSelectedAction = (selectedAction) => {
     }
   }
 };
+
+class healthBarPlayer {
+  constructor (element, initialValue = player.hp) {
+    this.valueElem = element.querySelector('.health-bar-value');
+    this.fillElem = element.querySelector('.health-bar-fill');
+    
+    this.setValue(initialValue);
+
+  }
+
+  setValue (newValue) {
+    if (newValue < 0) {
+      newValue = 0;
+    }
+
+    this.value = newValue;
+    this.update ();
+  }
+
+  update () {
+    const percentage = this.value + '%';
+    this.fillElem.style.width = percentage;
+    this.valueElem.textContent = percentage; 
+  }
+}
+
+const playerHealth = new healthBarPlayer(document.querySelector('.health-bar-player'));
+
+class healthBarEnemy {
+  constructor (element, initialValue = enemy.hp) {
+    this.valueElem = element.querySelector('.health-bar-value');
+    this.fillElem = element.querySelector('.health-bar-fill');
+    
+    this.setValue(initialValue);
+
+  }
+
+  setValue (newValue) {
+    if (newValue < 0) {
+      newValue = 0;
+    }
+
+    this.value = newValue;
+    this.update ();
+  }
+
+  update () {
+    const percentage = this.value + '%';
+    this.fillElem.style.width = percentage;
+    this.valueElem.textContent = percentage; 
+  }
+}
+
+const enemyHealth = new healthBarEnemy(document.querySelector('.health-bar-enemy'));
 
 startGame();
