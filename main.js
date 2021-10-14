@@ -17,7 +17,7 @@ let fireball = {
   msg: "Fireball was super effective!",
 };
 let sword = {
-  name: "fireball",
+  name: "sword",
   dmg: 4,
   manaCost: 0,
   msg: "Sword is heavy, goes doink!",
