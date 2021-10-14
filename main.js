@@ -4,6 +4,8 @@ let messegeBox = document.querySelector("#messege_box");
 let moveCounter = document.querySelector("#actual_move");
 let liveActionMessege = document.querySelector("#live_action_messege");
 let sentence = document.querySelector("#sentence");
+let actionButtons = document.querySelector("#actionButtons");
+
 //VISUAL UTILITIES
 
 //Typewriter function
@@ -41,25 +43,27 @@ const eraseIt = async (textBox, delay = 100) => {
 //GAME MECHANICS
 
 // gameCharacter constructor
-
-const gameCharacter = (name, hp, mp) => {
-  this.name = name;
-  //starts with max HP => actualHP===maxHP
-  this.maxHp = hp;
-  this.hp = hp;
-  this.maxMP = mp;
-  this.mp = mp;
-};
+class gameCharacter {
+  constructor(name, hp, mp) {
+    this.name = name;
+    //starts with max HP => actualHP===maxHP
+    this.maxHp = hp;
+    this.hp = hp;
+    this.maxMP = mp;
+    this.mp = mp;
+  }
+}
 
 //skillMove constructor
-
-const skillMove = (name, dmg, manaCost, msg) => {
-  this.name = name;
-  this.dmg = dmg;
-  this.manaCost = manaCost;
-  this.msg = msg;
-};
-
+class skillMove {
+  constructor(index, name, dmg, manaCost, msg) {
+    this.index = index;
+    this.name = name;
+    this.dmg = dmg;
+    this.manaCost = manaCost;
+    this.msg = msg;
+  }
+}
 //Character construction site
 
 const zombie = new gameCharacter("Zombie", 20, 20);
@@ -69,8 +73,8 @@ const enemy = new gameCharacter("Bad guy", 100, 10);
 
 //skill moves workshop
 
-const fireball = new skillMove("Fireball", 10, 2, "Fireball goes BOOM!");
-const sword = new skillMove("Sword", 5, 0, "Sword goes whooosh!");
+const fireball = new skillMove(0, "Fireball", 10, 2, "Fireball goes BOOM!");
+const sword = new skillMove(1, "Sword", 5, 0, "Sword goes whooosh!");
 
 let moveList = [fireball, sword];
 
@@ -79,6 +83,10 @@ let moveCount = 0;
 let attackingTurn = true;
 
 //
+
+const startGame = () => {
+  actionSelector();
+};
 
 const attack = async (attacking, defending, move) => {
   let message = move.msg;
@@ -111,3 +119,41 @@ const attack = async (attacking, defending, move) => {
   moveCount++;
   moveCounter.innerText = moveCount;
 };
+
+const actionSelector = () => {
+  while (actionButtons.firstChild) {
+    actionButtons.removeChild(actionButtons.firstChild);
+  }
+
+  moveList.forEach((move, i) => {
+    const button = document.createElement("button");
+    button.innerText = move.name;
+    button.classList.add("btn");
+    button.addEventListener("click", () => {
+      executingSelectedAction(move);
+      //console.log(move.index);
+    });
+    actionButtons.appendChild(button);
+  });
+};
+
+const executingSelectedAction = (selectedAction) => {
+  if (player.hp > 0 && enemy.hp > 0) {
+    // still playing
+    if (attackingTurn) {
+      console.log(`${player.name}'s turn to attack`);
+      attack(player, enemy, selectedAction); // Selected action is defined on each button
+    } else {
+      console.log(`${enemy.name}'s turn to attack`);
+      attack(enemy, player, moveList[0]);
+    }
+    if (player.hp <= 0) {
+      console.log("You died!");
+    }
+    if (enemy.hp <= 0) {
+      console.log("You won!");
+    }
+  }
+};
+
+startGame();

@@ -1,21 +1,38 @@
 #messege_box {
-    margin: auto;
-    width: 400px;
-    height: 400px;
-    overflow: hidden;
-    background-color: oldlace;
-    text-align: center;
+  margin: auto;
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  background-color: oldlace;
+  text-align: center;
 }
 
 #liveAction {
-    overflow: hidden;
-    margin:0 auto; 
-    white-space: nowrap;
-    animation:
-        typing 3.5s steps(30,end)
+  overflow: hidden;
+  margin: 0 auto;
+  white-space: nowrap;
+  animation: typing 3.5s steps(30, end);
 }
 
-@keyframes typing{
-    from {width:0}
-    to {width:100%}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.btn {
+  background-color: hsl(200, 100%, 50%);
+  border: 1px solid hsl(200, 100%, 30%);
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: white;
+  outline: none;
+  margin: 10px;
+}
+#actionButtons {
+  width: 200px;
+  margin: auto;
 }
