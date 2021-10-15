@@ -86,18 +86,16 @@ let attackingTurn = true;
 
 const startGame = () => {
   actionSelector();
+  nextRound();
 };
 
 const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
-  await eraseIt(liveActionMessege, 50);
+  await eraseIt(liveActionMessege, 20);
 
   typeIt(
-    `${message}
-
-
-  ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
+    `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
     liveActionMessege
   );
 
@@ -115,37 +113,60 @@ const attack = async (attacking, defending, move) => {
   console.log(`-------------------------------------------`);
 
   attackingTurn = !attackingTurn;
-
-  moveCount++;
-  moveCounter.innerText = moveCount;
+  if (attackingTurn === false) {
+    moveCount++;
+    moveCounter.innerText = moveCount;
+  }
 };
 
 const actionSelector = () => {
+  // Clears old buttons
   while (actionButtons.firstChild) {
     actionButtons.removeChild(actionButtons.firstChild);
   }
-
+  // Creates new buttons form each element in the moveList with a event listener to execute that move
   moveList.forEach((move, i) => {
     const button = document.createElement("button");
     button.innerText = move.name;
-    button.classList.add("btn");
+    button.classList.add("btn", "moveBtn");
     button.addEventListener("click", () => {
       executingSelectedAction(move);
-      //console.log(move.index);
     });
     actionButtons.appendChild(button);
   });
 };
 
+const nextRound = () => {
+  const button = document.createElement("button");
+  button.innerText = "End turn";
+  button.classList.add("btn", "endTurnBtn");
+  button.addEventListener("click", () => {
+    executingSelectedAction("endTurn");
+  });
+  actionButtons.appendChild(button);
+};
+
 const executingSelectedAction = (selectedAction) => {
+  const endTurnBtn = document.querySelector(".endTurnBtn");
+  const moveBtn = document.getElementsByClassName("moveBtn");
+
   if (player.hp > 0 && enemy.hp > 0) {
     // still playing
     if (attackingTurn) {
+      Array.from(moveBtn).forEach((btn) => {
+        btn.disabled = true;
+      });
       console.log(`${player.name}'s turn to attack`);
       attack(player, enemy, selectedAction); // Selected action is defined on each button
-    } else {
+      endTurnBtn.disabled = false;
+    }
+    if (selectedAction === "endTurn") {
+      endTurnBtn.disabled = true;
       console.log(`${enemy.name}'s turn to attack`);
       attack(enemy, player, moveList[0]);
+      Array.from(moveBtn).forEach((btn) => {
+        btn.disabled = false;
+      });
     }
     if (player.hp <= 0) {
       console.log("You died!");
