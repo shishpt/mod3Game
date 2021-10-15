@@ -5,7 +5,12 @@ let messegeBox = document.querySelector("#messege_box"),
   liveActionMessege = document.querySelector("#live_action_messege"),
   sentence = document.querySelector("#sentence"),
   actionButtons = document.querySelector("#actionButtons"),
-  combatLogArea = document.querySelector("#combatLogArea");
+  combatLogArea = document.querySelector("#combatLogArea"),
+  moveBtn = document.getElementsByClassName("moveBtn");
+
+// Game start setup
+let moveCount = 0;
+let attackingTurn = true;
 
 //VISUAL UTILITIES
 
@@ -16,14 +21,23 @@ const waitForMs = (ms) => {
 
 //Typewriter function
 
+// Types out a message letter by letter and disables all buttons in the meanwhile
 const typeIt = async (messege, textBox, delay = 100) => {
+  //Disable all buttons
+  const btns = document.getElementsByTagName("button");
+  Array.from(btns).forEach((btn) => {
+    btn.disabled = true;
+  });
+
   const letters = messege.split("");
+
   let i = 0;
   while (i < letters.length) {
     await waitForMs(delay);
     textBox.append(letters[i].toUpperCase());
     i++;
   }
+  enableDisableBtnsBasedOnWhosTurnItIs(); // Enables and disable the buttons based on whos turn it is
   return;
 };
 
@@ -32,7 +46,6 @@ const typeIt = async (messege, textBox, delay = 100) => {
 const eraseIt = async (textBox, delay = 100) => {
   const text = textBox.innerText;
   const letters = text.split("");
-  let i = 0;
   while (letters.length > 0) {
     await waitForMs(delay);
     letters.pop();
@@ -79,12 +92,7 @@ const sword = new skillMove(1, "Sword", 5, 0, "Sword goes whooosh!");
 // Creating a movelist from the newly created skills
 let moveList = [fireball, sword];
 
-// Game start setup
-let moveCount = 0;
-let attackingTurn = true;
-
-//
-
+//Function to start the game, running a few functions that create buttons based on the moveList and endTurn button
 const startGame = () => {
   actionSelector();
   nextRound();
@@ -93,7 +101,8 @@ const startGame = () => {
 const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
-  await eraseIt(liveActionMessege, 20);
+
+  await eraseIt(liveActionMessege, 10);
 
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
@@ -134,7 +143,7 @@ const actionSelector = () => {
     actionButtons.removeChild(actionButtons.firstChild);
   }
   // Creates new buttons form each element in the moveList with a event listener to execute that move
-  moveList.forEach((move, i) => {
+  moveList.forEach((move) => {
     const button = document.createElement("button");
     button.innerText = move.name;
     button.classList.add("btn", "moveBtn");
@@ -158,7 +167,6 @@ const nextRound = () => {
 
 const executingSelectedAction = (selectedAction) => {
   const endTurnBtn = document.querySelector(".endTurnBtn");
-  const moveBtn = document.getElementsByClassName("moveBtn");
 
   if (player.hp > 0 && enemy.hp > 0) {
     // still playing
@@ -259,6 +267,23 @@ const combatLog = (combatMsg) => {
   para.appendChild(text);
   //combatLogArea.appendChild(para);
   combatLogArea.prepend(para);
+};
+
+enableDisableBtnsBasedOnWhosTurnItIs = () => {
+  const endTurnBtn = document.querySelector(".endTurnBtn");
+
+  if (attackingTurn) {
+    Array.from(moveBtn).forEach((btn) => {
+      btn.disabled = false;
+    });
+    endTurnBtn.disabled = true;
+  }
+  if (!attackingTurn) {
+    endTurnBtn.disabled = false;
+    Array.from(moveBtn).forEach((btn) => {
+      btn.disabled = true;
+    });
+  }
 };
 
 startGame();

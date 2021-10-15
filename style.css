@@ -79,6 +79,7 @@ button[disabled] {
 }
 
 /* Combat log styling */
+
 #combatLogArea {
   margin: auto;
   width: 400px;
