@@ -8,26 +8,34 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="messege_box">
-      <h1 id="move_counter">Move <span id="actual_move">0</span></h1>
-      <p id="live_action_messege">SOMETHING</p>
+    <div class="hpContainer">
+      <div>
+        <p>Hero HP:</p>
+        <div class="health-bar-player">
+          <div class="health-bar-value">100%</div>
+          <div class="health-bar-fill"></div>
+        </div>
+      </div>
+      <div>
+        <p>Bad Guy HP:</p>
+        <div class="health-bar-enemy">
+          <div class="health-bar-value">100%</div>
+          <div class="health-bar-fill"></div>
+        </div>
+      </div>
     </div>
 
-    <p>Hero HP:</p>
-    <div class="health-bar-player">
-      <div class="health-bar-value">100%</div>
-      <div class="health-bar-fill"></div>
-    </div>
-    
-    <p>Bad Guy HP:</p>
-    <div class="health-bar-enemy">
-      <div class="health-bar-value">100%</div>
-      <div class="health-bar-fill"></div>
+    <div id="messege_box">
+      <h1 id="move_counter">Round <span id="actual_move">0</span></h1>
+      <p id="live_action_messege"></p>
     </div>
 
     <div id="actionButtons">
       <button class="btn">Button</button>
     </div>
+
+    <div id="combatLogArea"></div>
+
     <script src="main.js"></script>
   </body>
 </html>
