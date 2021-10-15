@@ -1,15 +1,20 @@
 //  HTML node Selecting zone
 
-let messegeBox = document.querySelector("#messege_box");
-let moveCounter = document.querySelector("#actual_move");
-let liveActionMessege = document.querySelector("#live_action_messege");
-let sentence = document.querySelector("#sentence");
-let actionButtons = document.querySelector("#actionButtons");
+let messegeBox = document.querySelector("#messege_box"),
+  moveCounter = document.querySelector("#actual_move"),
+  liveActionMessege = document.querySelector("#live_action_messege"),
+  sentence = document.querySelector("#sentence"),
+  actionButtons = document.querySelector("#actionButtons"),
+  combatLogArea = document.querySelector("#combatLogArea");
 
 //VISUAL UTILITIES
 
+// set timeout for the selected amount of ms
+const waitForMs = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 //Typewriter function
-//
 
 const typeIt = async (messege, textBox, delay = 100) => {
   const letters = messege.split("");
@@ -20,10 +25,6 @@ const typeIt = async (messege, textBox, delay = 100) => {
     i++;
   }
   return;
-};
-
-const waitForMs = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 //textbox erasing function
@@ -64,18 +65,18 @@ class skillMove {
     this.msg = msg;
   }
 }
-//Character construction site
 
+//Character construction site
 const zombie = new gameCharacter("Zombie", 20, 20);
 const player = new gameCharacter("Hero", 100, 10);
 const mage = new gameCharacter("Mage", 150, 50);
 const enemy = new gameCharacter("Bad guy", 100, 10);
 
 //skill moves workshop
-
 const fireball = new skillMove(0, "Fireball", 10, 2, "Fireball goes BOOM!");
 const sword = new skillMove(1, "Sword", 5, 0, "Sword goes whooosh!");
 
+// Creating a movelist from the newly created skills
 let moveList = [fireball, sword];
 
 // Game start setup
@@ -96,7 +97,8 @@ const attack = async (attacking, defending, move) => {
 
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
-    liveActionMessege
+    liveActionMessege,
+    50
   );
 
   console.log(
@@ -117,6 +119,9 @@ const attack = async (attacking, defending, move) => {
     moveCount++;
     moveCounter.innerText = moveCount;
   }
+  combatLog(
+    ` R ${moveCount} - ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`
+  );
 };
 
 const actionSelector = () => {
@@ -143,6 +148,7 @@ const nextRound = () => {
   button.addEventListener("click", () => {
     executingSelectedAction("endTurn");
   });
+  button.disabled = true;
   actionButtons.appendChild(button);
 };
 
@@ -175,6 +181,14 @@ const executingSelectedAction = (selectedAction) => {
       console.log("You won!");
     }
   }
+};
+
+const combatLog = (combatMsg) => {
+  const para = document.createElement("p");
+  const text = document.createTextNode(combatMsg);
+  para.appendChild(text);
+  //combatLogArea.appendChild(para);
+  combatLogArea.prepend(para);
 };
 
 startGame();

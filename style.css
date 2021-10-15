@@ -23,6 +23,7 @@
   }
 }
 
+/* Action buttons styling */
 .btn {
   background-color: hsl(200, 100%, 50%);
   border: 1px solid hsl(200, 100%, 30%);
@@ -41,4 +42,16 @@ button[disabled] {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+}
+
+/* Combat log styling */
+#combatLogArea {
+  margin: auto;
+  width: 400px;
+  height: 150px;
+  overflow: hidden;
+  background-color: #666666;
+  text-align: left;
+  padding: 0px 10px;
+  color: greenyellow;
 }
