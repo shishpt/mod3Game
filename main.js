@@ -221,8 +221,7 @@ class healthBarEnemy {
     this.fillElem = element.querySelector(".health-bar-fill");
     if (this.value <= 50 && this.value >= 31) {
       this.fillElem.style.background = "#FFBF00";
-    }
-    else if (this.value <30) {
+    } else if (this.value < 30) {
       this.fillElem.style.background = "#C41E3A";
     }
 
@@ -244,8 +243,7 @@ class healthBarEnemy {
     this.valueElem.textContent = percentage;
     if (this.value <= 50 && this.value >= 31) {
       this.fillElem.style.background = "#FFBF00";
-    }
-    else if (this.value <30) {
+    } else if (this.value < 30) {
       this.fillElem.style.background = "#C41E3A";
     }
   }
