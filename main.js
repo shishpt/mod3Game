@@ -219,6 +219,12 @@ class healthBarEnemy {
   constructor(element, initialValue = enemy.hp) {
     this.valueElem = element.querySelector(".health-bar-value");
     this.fillElem = element.querySelector(".health-bar-fill");
+    if (this.value <= 50 && this.value >= 31) {
+      this.fillElem.style.background = "#FFBF00";
+    }
+    else if (this.value <30) {
+      this.fillElem.style.background = "#C41E3A";
+    }
 
     this.setValue(initialValue);
   }
@@ -236,6 +242,12 @@ class healthBarEnemy {
     const percentage = this.value + "%";
     this.fillElem.style.width = percentage;
     this.valueElem.textContent = percentage;
+    if (this.value <= 50 && this.value >= 31) {
+      this.fillElem.style.background = "#FFBF00";
+    }
+    else if (this.value <30) {
+      this.fillElem.style.background = "#C41E3A";
+    }
   }
 }
 
