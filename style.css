@@ -4,6 +4,7 @@
 * {
   font-family: "Press Start 2P", cursive;
   box-sizing: border-box;
+  font-size: 16px;
 }
 
 body {
@@ -13,12 +14,12 @@ body {
 /* Main frame styling */
 .grid-container {
   display: grid;
-  grid-template-columns: 104px 104px 104px 104px 104px 104px 104px 104px 104px 104px;
-  grid-template-rows: 100px 100px 100px 100px 100px 100px 100px 100px;
-  width: 1040px;
-  height: 800px;
+  grid-template-columns: 6.5rem 6.5rem 6.5rem 6.5rem 6.5rem 6.5rem 6.5rem 6.5rem 6.5rem 6.5rem;
+  grid-template-rows: 6.25rem 6.25rem 6.25rem 6.25rem 6.25rem 6.25rem 6.25rem 6.25rem;
+  width: 65rem;
+  height: 50rem;
   border: 1px solid #000;
-  margin: 10px auto;
+  margin: 0.625rem auto;
 }
 
 .game-console-container {
@@ -40,7 +41,7 @@ body {
 }
 
 h2 {
-  font-size: 25px;
+  font-size: 1.563rem;
   text-align: center;
 }
 
@@ -48,7 +49,7 @@ h2 {
 #actionButtons {
   display: block;
   justify-content: center;
-  width: 200px;
+  width: 12.5rem;
   margin: 0px 14.5%;
 }
 
@@ -60,10 +61,10 @@ button[disabled] {
 }
 
 .btn {
-  width: 220px;
-  height: 80px;
-  margin-top: 20px;
-  font-size: 20px;
+  width: 13.75rem;
+  height: 5rem;
+  margin-top: 1.25rem;
+  font-size: 1.25rem;
   background-color: #fff;
   border: 1px solid #000;
   border-radius: 5px;
@@ -78,12 +79,12 @@ button[disabled] {
 #messege_box {
   position: relative;
   margin: 0;
-  width: 300px;
-  height: 120px;
+  width: 18.75rem;
+  height: 7.5rem;
   overflow: hidden;
   text-align: center;
   font-size: small;
-  margin: -400px 200px;
+  margin: -25rem 12.5rem;
 }
 
 #liveAction {
@@ -105,24 +106,24 @@ button[disabled] {
 /* Character styling */
 .enemy-character {
   position: absolute;
-  width: 240px;
-  height: 362px;
-  margin: 100px 480px;
+  width: 15rem;
+  height: 22.625rem;
+  margin: 6.25rem 30rem;
 }
 
 .hero-character {
   position: relative;
-  width: 240px;
-  height: 362px;
-  margin: 100px 0px;
+  width: 15rem;
+  height: 22.625rem;
+  margin: 6.25rem 0rem;
 }
 
 /* Health bar styling */
 .health-bar-player,
 .health-bar-enemy {
   position: relative;
-  width: 250px;
-  height: 20px;
+  width: 15.625rem;
+  height: 1.25rem;
   border: 1px solid #000000;
   border-radius: 20px;
 }
@@ -147,7 +148,7 @@ button[disabled] {
 .hp-container-player {
   display: flex;
   justify-content: center;
-  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
 }
 
 .hp-container-enemy {
@@ -158,10 +159,10 @@ button[disabled] {
 /* Combat log styling */
 #combatLogArea {
   position: relative;
-  margin: 20px 176px;
-  padding: 10px 15px;
-  width: 290.75px;
-  height: 160.49px;
+  margin: 1.25rem 11rem;
+  padding: 0.625rem 0.938rem;
+  width: 18.172rem;
+  height: 10.031rem;
   overflow: hidden;
   background-color: #000;
   text-align: left;
@@ -169,10 +170,30 @@ button[disabled] {
 }
 
 p {
-  padding: 1.5px;
+  padding: 0.094rem;
 }
 
 .tv {
   position: absolute;
-  margin: -1px 156px;
+  margin: -0.063rem 9.75rem;
+  width: 26rem;
+  height: 12.5rem;
+}
+
+@media only screen and (min-width: 1280px) and (max-width: 1439px) {
+  * {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 1007px) and (max-width: 1279px) {
+  * {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 640px) and (max-width: 1006px) {
+  * {
+    font-size: 10px;
+  }
 }
