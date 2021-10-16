@@ -8,34 +8,44 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="hpContainer">
-      <div>
-        <p>Hero HP:</p>
-        <div class="health-bar-player">
-          <div class="health-bar-value"></div>
-          <div class="health-bar-fill"></div>
+    <div class="grid-container">
+      <div class="game-console-container">
+        <h2>Hero</h2>
+        <div class="hp-container-player">
+            <div class="health-bar-player">
+              <div class="health-bar-value">
+              </div>
+              <div class="health-bar-fill">
+              </div>
+            </div>
+        </div>
+            <div id="actionButtons">
+              <button class="btn">Button</button>
+            </div>
+      </div> 
+    
+      <div class="combat-field-container">
+        <div class="hp-container-enemy">
+          <h2>Bad Guy</h2>
+          <div class="health-bar-enemy">
+            <div class="health-bar-value"></div>
+            <div class="health-bar-fill"></div>
+          </div>
+        </div>
+        <img src="images/Alien_shooting.gif" alt="enemy" class="enemy-character">
+        <img src="images/Alien_brainsout.gif" alt="hero" class="hero-character">
+        <div id="messege_box">
+          <h1 id="move_counter">Round <span id="actual_move">0</span></h1>
+          <p id="live_action_messege"></p>
         </div>
       </div>
-      <div>
-        <p>Bad Guy HP:</p>
-        <div class="health-bar-enemy">
-          <div class="health-bar-value"></div>
-          <div class="health-bar-fill"></div>
+
+      <div class="log-area-container">
+        <img src="images/TV.jpg" class="tv" alt="TV">
+        <div id="combatLogArea">
         </div>
       </div>
     </div>
-
-    <div id="messege_box">
-      <h1 id="move_counter">Round <span id="actual_move">0</span></h1>
-      <p id="live_action_messege"></p>
-    </div>
-
-    <div id="actionButtons">
-      <button class="btn">Button</button>
-    </div>
-
-    <div id="combatLogArea"></div>
-
     <script src="main.js"></script>
   </body>
 </html>

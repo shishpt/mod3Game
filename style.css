@@ -1,10 +1,89 @@
-#messege_box {
-  margin: auto;
-  width: 400px;
-  height: 400px;
-  overflow: hidden;
-  background-color: oldlace;
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+/*font-family: 'Press Start 2P', cursive;*/
+
+* {
+  font-family: "Press Start 2P", cursive;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* Main frame styling */
+.grid-container {
+  display: grid;
+  grid-template-columns: 104px 104px 104px 104px 104px 104px 104px 104px 104px 104px;
+  grid-template-rows: 100px 100px 100px 100px 100px 100px 100px 100px;
+  width: 1040px;
+  height: 800px;
+  border: 1px solid #000;
+  margin: 10px auto;
+}
+
+.game-console-container {
+  grid-column: 1 / 4;
+  grid-row: 1 / 9;
+  border: 1px solid #000;
+}
+
+.combat-field-container {
+  grid-column: 4 / 11;
+  grid-row: 1 / 7;
+  border: 1px solid #000;
+}
+
+.log-area-container {
+  grid-column: 4 / 11;
+  grid-row: 7 / 9;
+  border: 1px solid #000;
+}
+
+h2 {
+  font-size: 25px;
   text-align: center;
+}
+
+/* Action buttons styling */
+#actionButtons {
+  display: block;
+  justify-content: center;
+  width: 200px;
+  margin: 0px 14.5%;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.btn {
+  width: 220px;
+  height: 80px;
+  margin-top: 20px;
+  font-size: 20px;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  color: #000;
+  outline: none;
+}
+
+.btn:hover:enabled {
+  background-color: rgb(40, 202, 40);
+}
+
+#messege_box {
+  position: relative;
+  margin: 0;
+  width: 300px;
+  height: 120px;
+  overflow: hidden;
+  text-align: center;
+  font-size: small;
+  margin: -400px 200px;
 }
 
 #liveAction {
@@ -23,42 +102,36 @@
   }
 }
 
-/* Action buttons styling */
-.btn {
-  background-color: hsl(200, 100%, 50%);
-  border: 1px solid hsl(200, 100%, 30%);
-  border-radius: 5px;
-  padding: 5px 10px;
-  color: white;
-  outline: none;
-  margin: 10px;
+/* Character styling */
+.enemy-character {
+  position: absolute;
+  width: 240px;
+  height: 362px;
+  margin: 100px 480px;
 }
 
-#actionButtons {
-  width: 200px;
-  margin: auto;
-}
-
-button:disabled,
-button[disabled] {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
+.hero-character {
+  position: relative;
+  width: 240px;
+  height: 362px;
+  margin: 100px 0px;
 }
 
 /* Health bar styling */
 .health-bar-player,
 .health-bar-enemy {
   position: relative;
-  width: 300px;
-  height: 40px;
+  width: 250px;
+  height: 20px;
   border: 1px solid #000000;
+  border-radius: 20px;
 }
 
 .health-bar-fill {
   height: 100%;
   background: rgb(40, 202, 40);
   transition: width 0.5s;
+  border-radius: 20px;
 }
 
 .health-bar-value {
@@ -71,22 +144,35 @@ button[disabled] {
   font-weight: bold;
 }
 
-.hpContainer {
+.hp-container-player {
   display: flex;
   justify-content: center;
-  gap: 30px;
   padding-bottom: 20px;
 }
 
-/* Combat log styling */
+.hp-container-enemy {
+  display: inline-block;
+  margin-left: 64%;
+}
 
+/* Combat log styling */
 #combatLogArea {
-  margin: auto;
-  width: 400px;
-  height: 150px;
+  position: relative;
+  margin: 20px 176px;
+  padding: 10px 15px;
+  width: 290.75px;
+  height: 160.49px;
   overflow: hidden;
-  background-color: #666666;
+  background-color: #000;
   text-align: left;
-  padding: 0px 10px;
-  color: greenyellow;
+  color: #fff;
+}
+
+p {
+  padding: 1.5px;
+}
+
+.tv {
+  position: absolute;
+  margin: -1px 156px;
 }
