@@ -96,6 +96,7 @@ button[disabled] {
 }
 
 .btn {
+  position: relative;
   width: 13.75rem;
   height: 5rem;
   margin-top: 1.25rem;
@@ -106,11 +107,32 @@ button[disabled] {
   color: #000;
   outline: none;
 }
+.btn .tooltip-text {
+  visibility: hidden;
+  height: 5rem;
+  width: 13rem;
+  background-color:black;
+  color:#fff;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 24px;
+  border-radius: 5px;
+  position:absolute;
+  top:0%;
+  right:110%;
+  z-index: 1;
+}
+
+.btn:hover .tooltip-text {
+  visibility:visible;
+}
 
 .btn:hover:enabled {
   background-color: rgb(40, 202, 40);
 }
 
+
+/* Live typing styling */
 #messege_box {
   position: relative;
   margin: 30% auto;
@@ -138,7 +160,7 @@ button[disabled] {
   }
 }
 
-/* Character styling */
+/* Character sprites styling */
 .enemy-character {
   position: absolute;
   width: 13rem;
@@ -193,7 +215,7 @@ button[disabled] {
 
 .mana-bar-fill {
   height: 100%;
-  background: rgb(40, 70, 202);
+  background: #4770FF;
   transition: width 0.5s;
   border-radius: 20px;
 }
@@ -242,6 +264,46 @@ p {
   margin: -0.063rem 9.75rem;
   width: 26rem;
   height: 12.5rem;
+}
+
+/* status effects */
+
+@keyframes shake {
+  0% { transform: skewX(-152deg); }
+  5% { transform: skewX(60deg); }
+  10% { transform: skewX(-115deg); }
+  15% { transform: skewX(85deg); }
+  20% { transform: skewX(-40deg);}
+  30% {transform: skewX(0deg);}
+  100% { transform: skewX(0deg); }  
+}
+
+@keyframes poison {
+  0% {color :rgb(40, 202, 40)}
+  30% {color: #000}
+  40% {color :rgb(40, 202, 40)}
+  70% {color: #000}
+  80% {color :rgb(40, 202, 40)}
+  100% {color: #000}
+}
+
+@keyframes burn {
+  0% {color :#FF4F47}
+  30% {color: #000}
+  40% {color :#FF4F47}
+  70% {color: #000}
+  80% {color :#FF4F47}
+  100% {color: #000}
+}
+
+.shake {
+  animation: 5s shake;
+}
+.poison {
+  animation: 5s poison;
+}
+.burn {
+  animation: 5s burn;
 }
 
 @media only screen and (min-width: 1280px) and (max-width: 1439px) {
@@ -476,6 +538,8 @@ p {
   .tv {
     display: none;
   }
+
+
 }
 
 /* Start button styling */
