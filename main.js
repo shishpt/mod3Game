@@ -12,7 +12,6 @@ let messegeBox = document.querySelector("#messege_box"),
   heroNameTag = document.querySelector("#hero-name"),
   enemyNameTag = document.querySelector("#enemy-name");
 
-
 // Game start setup
 let moveCount = 0;
 let attackingTurn = true;
@@ -146,6 +145,7 @@ const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
 
+  console.log(attacking);
   animateAttack(attacking);
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
@@ -222,7 +222,6 @@ const checkStatus = async (character, statusName) => {
             `${character.name} loses 5 hp in fact of a burn`,
             liveActionMessege
           );
-          
         }
         break;
       case "poison":
@@ -251,11 +250,10 @@ const actionSelector = () => {
   }
   // Creates new buttons form each element in the moveList with a event listener to execute that move
   moveList.forEach((move) => {
- 
     const button = document.createElement("button");
-    button.innerHTML =` ${move.name} <span class='tooltip-text'> ${move.manaCost} MP and ${move.msg}</span>`;
+    button.innerHTML = ` ${move.name} <span class='tooltip-text'> ${move.manaCost} MP and ${move.msg}</span>`;
     button.classList.add("btn", "moveBtn");
-   
+
     button.addEventListener("click", () => {
       if (checkMana(move, player)) {
         executingSelectedAction(move);
@@ -370,7 +368,6 @@ const playerHealth = new healthBarPlayer(
   document.querySelector(".health-bar-player")
 );
 
-
 class manaBarPlayer {
   constructor(element, initialValue = player.mp) {
     this.valueElem = element.querySelector(".mana-bar-value");
@@ -389,9 +386,9 @@ class manaBarPlayer {
   }
 
   update() {
-    const percentage = this.value *100/player.maxMP  + "%";
+    const percentage = (this.value * 100) / player.maxMP + "%";
     this.fillElem.style.width = percentage;
-    this.valueElem.textContent = this.value + '/' +player.maxMP;
+    this.valueElem.textContent = this.value + "/" + player.maxMP;
   }
 }
 
