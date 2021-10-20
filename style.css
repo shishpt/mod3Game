@@ -449,3 +449,24 @@ p {
     display: none;
   }
 }
+
+/* Start button styling */
+
+.tvContainer {
+  position: relative;
+  width: auto;
+  height: 100%;
+}
+
+.tvContainer img {
+  width: auto;
+  height: 100%;
+}
+
+.tvContainer .start-game-btn {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}

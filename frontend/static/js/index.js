@@ -1,15 +1,20 @@
 import startGame from "./views/startGame.js";
 import mummy from "./views/mummy.js";
 import err404 from "./views/err404.js";
+//import { waitForMs } from "../../../main.js";
 
-const navigateTo = (url) => {
+export const waitForMs = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const navigateTo = (url) => {
   history.pushState(null, null, url);
   router();
 };
 
 const router = async () => {
   const routes = [
-    { path: "/", view: startGame },
+    { path: "/startGame", view: startGame },
     { path: "/404", view: err404 },
     { path: "/mummy", view: mummy },
   ];
@@ -25,18 +30,32 @@ const router = async () => {
   let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
 
   if (!match) {
-    console.log(match.result);
     match = {
       route: routes[0],
       isMatch: true,
     };
   }
 
-  console.log(match);
-
   const view = new match.route.view();
 
-  document.querySelector("#enemy-combat").innerHTML = await view.enemyStatic();
+  view.animation();
+
+  let waitTime = await waitForMs(11200);
+
+  view.resetBody(); // load the HTML for the game view
+
+  document.querySelector(".enemy-info-container").innerHTML =
+    await view.enemyInfo();
+
+  document.querySelector(".enemy-character-container").innerHTML =
+    await view.enemyStatic();
+
+  document.querySelector(".player-character-container").innerHTML =
+    await view.heroStatic();
+
+  waitTime = await waitForMs(1000);
+
+  await import("../../../main.js"); // Load main.js
 };
 
 window.addEventListener("popstate", router);

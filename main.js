@@ -23,12 +23,12 @@ const animateAttack = async (character) => {
 
   if (character === player) {
     let basicStance = heroCharacterImage.src;
-    heroCharacterImage.src = "assets/GIF/hero_attacking.gif";
+    heroCharacterImage.src = "/assets/GIF/hero_attacking.gif";
     await waitForMs(1400);
     heroCharacterImage.src = basicStance;
   } else {
     let basicStance = enemyCharacterImage.src;
-    enemyCharacterImage.src = `/images/${character.name}_attacking.gif`;
+    enemyCharacterImage.src = `/assets/GIF/${character.name}_attacking.gif`;
     await waitForMs(1400);
     enemyCharacterImage.src = basicStance;
   }
@@ -128,7 +128,7 @@ let moveList = [fireball, sword, acid];
 let enemyMoveList = [fireball, sword, acid, zap];
 
 //Function to start the game, running a few functions that create buttons based on the moveList and endTurn button
-const startGame = () => {
+const loadGame = () => {
   actionSelector();
   nextRound();
 };
@@ -400,7 +400,7 @@ const combatLog = (combatMsg) => {
   combatLogArea.prepend(para);
 };
 
-enableDisableBtnsBasedOnWhosTurnItIs = () => {
+const enableDisableBtnsBasedOnWhosTurnItIs = () => {
   const endTurnBtn = document.querySelector(".endTurnBtn");
 
   if (attackingTurn) {
@@ -417,4 +417,4 @@ enableDisableBtnsBasedOnWhosTurnItIs = () => {
   }
 };
 
-startGame();
+loadGame();
