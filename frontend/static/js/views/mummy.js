@@ -45,6 +45,10 @@ export default class extends abstractView {
                   <div class="health-bar-value"></div>
                   <div class="health-bar-fill"></div>
                 </div>
+                <div class="mana-bar-player">
+                  <div class="mana-bar-value"></div>
+                  <div class="mana-bar-fill"></div>
+                </div>
               </div>
             </div>
     
@@ -86,7 +90,8 @@ export default class extends abstractView {
           </div>
         </div>
     
-        <script type="module" src="main.js"></script>
+        <!-- <script type="module" src="main.js"></script> -->
+        <script type="module" src="./frontend/static/js/index.js"></script>
       </body>
     </html>
     `);

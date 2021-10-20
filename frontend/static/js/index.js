@@ -53,8 +53,6 @@ const router = async () => {
   document.querySelector(".player-character-container").innerHTML =
     await view.heroStatic();
 
-  waitTime = await waitForMs(1000);
-
   await import("../../../main.js"); // Load main.js
 };
 
