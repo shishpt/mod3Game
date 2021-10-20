@@ -8,7 +8,10 @@ let messegeBox = document.querySelector("#messege_box"),
   combatLogArea = document.querySelector("#combatLogArea"),
   moveBtn = document.getElementsByClassName("moveBtn"),
   heroCharacterImage = document.querySelector(".hero-character"),
-  enemyCharacterImage = document.querySelector(".enemy-character");
+  enemyCharacterImage = document.querySelector(".enemy-character"),
+  heroNameTag = document.querySelector("#hero-name"),
+  enemyNameTag = document.querySelector("#enemy-name");
+
 
 // Game start setup
 let moveCount = 0;
@@ -219,6 +222,7 @@ const checkStatus = async (character, statusName) => {
             `${character.name} loses 5 hp in fact of a burn`,
             liveActionMessege
           );
+          
         }
         break;
       case "poison":
@@ -247,9 +251,11 @@ const actionSelector = () => {
   }
   // Creates new buttons form each element in the moveList with a event listener to execute that move
   moveList.forEach((move) => {
+ 
     const button = document.createElement("button");
-    button.innerText = move.name;
+    button.innerHTML =` ${move.name} <span class='tooltip-text'> ${move.manaCost} MP and ${move.msg}</span>`;
     button.classList.add("btn", "moveBtn");
+   
     button.addEventListener("click", () => {
       if (checkMana(move, player)) {
         executingSelectedAction(move);
