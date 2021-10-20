@@ -1,3 +1,4 @@
+import startGame from "./views/startGame.js";
 import mummy from "./views/mummy.js";
 import err404 from "./views/err404.js";
 
@@ -8,39 +9,34 @@ const navigateTo = (url) => {
 
 const router = async () => {
   const routes = [
-    //{ path: "/", view: startGame },
-    { path: "/mummy", view: mummy },
-    //{ path: "/blog/:id", view: blogView },
+    { path: "/", view: startGame },
     { path: "/404", view: err404 },
+    { path: "/mummy", view: mummy },
   ];
 
   // Test each route for potential match
   const potentialMatches = routes.map((route) => {
-    console.log(location.pathname.match(route.path));
     return {
       route: route,
-      result: location.pathname.match(route.path),
+      isMatch: location.pathname === route.path,
     };
   });
 
-  let match = potentialMatches.find(
-    (potentialMatch) => potentialMatch.result !== null
-  );
-
-  //console.log(match);
+  let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
 
   if (!match) {
+    console.log(match.result);
     match = {
-      route: routes[3],
-      result: [location.pathname],
+      route: routes[0],
+      isMatch: true,
     };
   }
 
   console.log(match);
 
-  const view = new match.route.view(getParams(match));
+  const view = new match.route.view();
 
-  document.querySelector(".content").innerHTML = await view.getHTML();
+  document.querySelector("#enemy-combat").innerHTML = await view.enemyStatic();
 };
 
 window.addEventListener("popstate", router);

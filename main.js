@@ -6,9 +6,9 @@ let messegeBox = document.querySelector("#messege_box"),
   sentence = document.querySelector("#sentence"),
   actionButtons = document.querySelector("#actionButtons"),
   combatLogArea = document.querySelector("#combatLogArea"),
-  moveBtn = document.getElementsByClassName("moveBtn");
-heroCharacterImage = document.querySelector(".hero-character");
-enemyCharacterImage = document.querySelector(".enemy-character");
+  moveBtn = document.getElementsByClassName("moveBtn"),
+  heroCharacterImage = document.querySelector(".hero-character"),
+  enemyCharacterImage = document.querySelector(".enemy-character");
 
 // Game start setup
 let moveCount = 0;
@@ -23,7 +23,7 @@ const animateAttack = async (character) => {
 
   if (character === player) {
     let basicStance = heroCharacterImage.src;
-    heroCharacterImage.src = "/images/hero_attacking.gif";
+    heroCharacterImage.src = "assets/GIF/hero_attacking.gif";
     await waitForMs(1400);
     heroCharacterImage.src = basicStance;
   } else {
