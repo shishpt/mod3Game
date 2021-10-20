@@ -181,8 +181,36 @@ button[disabled] {
   font-weight: bold;
 }
 
+.mana-bar-player
+{
+  position: relative;
+  width: 15.625rem;
+  height: 1.25rem;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  margin: 0 auto;
+}
+
+.mana-bar-fill {
+  height: 100%;
+  background: rgb(40, 70, 202);
+  transition: width 0.5s;
+  border-radius: 20px;
+}
+
+.mana-bar-value {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
 .hp-container-player {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding-bottom: 10.25rem;
 }
