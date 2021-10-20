@@ -42,7 +42,7 @@ const waitForMs = (ms) => {
 
 //textbox erasing function
 
-const eraseIt = async (textBox, delay = 25) => {
+const eraseIt = async (textBox, delay = 15) => {
   const text = textBox.innerText;
   const letters = text.split("");
   while (letters.length > 0) {
@@ -53,7 +53,7 @@ const eraseIt = async (textBox, delay = 25) => {
   return;
 };
 // Types out a message letter by letter and disables all buttons in the meanwhile
-const typeIt = async (messege, textBox, delay = 100) => {
+const typeIt = async (messege, textBox, delay = 60) => {
   //Disable all buttons
   const btns = document.getElementsByTagName("button");
   Array.from(btns).forEach((btn) => {
@@ -146,8 +146,7 @@ const attack = async (attacking, defending, move) => {
   animateAttack(attacking);
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
-    liveActionMessege,
-    50
+    liveActionMessege
   );
 
   console.log(
@@ -172,6 +171,7 @@ const attack = async (attacking, defending, move) => {
 
   playerHealth.setValue(player.hp);
   enemyHealth.setValue(enemy.hp);
+  playerMana.setValue(player.mp);
 
   if (attackingTurn === false) {
     moveCount++;
@@ -331,7 +331,11 @@ class healthBarPlayer {
   constructor(element, initialValue = player.hp) {
     this.valueElem = element.querySelector(".health-bar-value");
     this.fillElem = element.querySelector(".health-bar-fill");
-
+    if (this.value <= 50 && this.value >= 31) {
+      this.fillElem.style.background = "#FFBF00";
+    } else if (this.value < 30) {
+      this.fillElem.style.background = "#C41E3A";
+    }
     this.setValue(initialValue);
   }
 
@@ -348,11 +352,45 @@ class healthBarPlayer {
     const percentage = this.value + "%";
     this.fillElem.style.width = percentage;
     this.valueElem.textContent = percentage;
+    if (this.value <= 50 && this.value >= 31) {
+      this.fillElem.style.background = "#FFBF00";
+    } else if (this.value < 30) {
+      this.fillElem.style.background = "#C41E3A";
+    }
   }
 }
 
 const playerHealth = new healthBarPlayer(
   document.querySelector(".health-bar-player")
+);
+
+
+class manaBarPlayer {
+  constructor(element, initialValue = player.mp) {
+    this.valueElem = element.querySelector(".mana-bar-value");
+    this.fillElem = element.querySelector(".mana-bar-fill");
+
+    this.setValue(initialValue);
+  }
+
+  setValue(newValue) {
+    if (newValue < 0) {
+      newValue = 0;
+    }
+
+    this.value = newValue;
+    this.update();
+  }
+
+  update() {
+    const percentage = this.value *100/player.maxMP  + "%";
+    this.fillElem.style.width = percentage;
+    this.valueElem.textContent = this.value + '/' +player.maxMP;
+  }
+}
+
+const playerMana = new manaBarPlayer(
+  document.querySelector(".mana-bar-player")
 );
 
 class healthBarEnemy {
