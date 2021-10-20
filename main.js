@@ -7,8 +7,8 @@ let messegeBox = document.querySelector("#messege_box"),
   actionButtons = document.querySelector("#actionButtons"),
   combatLogArea = document.querySelector("#combatLogArea"),
   moveBtn = document.getElementsByClassName("moveBtn");
-  heroCharacterImage = document.querySelector('.hero-character')
-  enemyCharacterImage = document.querySelector('.enemy-character')
+heroCharacterImage = document.querySelector(".hero-character");
+enemyCharacterImage = document.querySelector(".enemy-character");
 
 // Game start setup
 let moveCount = 0;
@@ -16,26 +16,23 @@ let attackingTurn = true;
 
 //VISUAL UTILITIES
 
-
-//Animating characters during attacks 
+//Animating characters during attacks
 
 const animateAttack = async (character) => {
-  char=character;
-  
-  if (character===player) {
-    let basicStance = heroCharacterImage.src ;
-    heroCharacterImage.src = '/images/hero_attacking.gif';
-   await waitForMs(1400);
-    heroCharacterImage.src = basicStance;
+  char = character;
 
+  if (character === player) {
+    let basicStance = heroCharacterImage.src;
+    heroCharacterImage.src = "/images/hero_attacking.gif";
+    await waitForMs(1400);
+    heroCharacterImage.src = basicStance;
   } else {
-    let basicStance = enemyCharacterImage.src ;
+    let basicStance = enemyCharacterImage.src;
     enemyCharacterImage.src = `/images/${character.name}_attacking.gif`;
     await waitForMs(1400);
     enemyCharacterImage.src = basicStance;
-    
   }
-}
+};
 // set timeout for the selected amount of ms
 const waitForMs = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -62,10 +59,9 @@ const typeIt = async (messege, textBox, delay = 100) => {
   Array.from(btns).forEach((btn) => {
     btn.disabled = true;
   });
-  
-  
-  let eraseDelay=delay/4;
-  await eraseIt(textBox,eraseDelay);
+
+  let eraseDelay = delay / 4;
+  await eraseIt(textBox, eraseDelay);
 
   const letters = messege.split("");
 
@@ -79,20 +75,18 @@ const typeIt = async (messege, textBox, delay = 100) => {
   return;
 };
 
-
-
 //GAME MECHANICS
 
 // gameCharacter constructor
 class gameCharacter {
-  constructor(name, hp, mp,statusName,statusDuration) {
+  constructor(name, hp, mp, statusName, statusDuration) {
     this.name = name;
     //starts with max HP => actualHP===maxHP
     this.maxHp = hp;
     this.hp = hp;
     this.maxMP = mp;
     this.mp = mp;
-    this.status=[{statusName:statusName, statusDuration:statusDuration}];
+    this.status = [{ statusName: statusName, statusDuration: statusDuration }];
   }
 }
 
@@ -103,9 +97,9 @@ class skillMove {
     this.dmg = dmg;
     this.manaCost = manaCost;
     this.msg = msg;
-    if(statusName){
-      this.statusName=statusName;
-      this.statusDuration=statusDuration;
+    if (statusName) {
+      this.statusName = statusName;
+      this.statusDuration = statusDuration;
     }
   }
 }
@@ -117,15 +111,21 @@ const mage = new gameCharacter("Mage", 150, 50);
 const enemy = new gameCharacter("Bad guy", 100, 10);
 
 //skill moves workshop
-const fireball = new skillMove( "Fireball", 10, 5, "Fireball goes BOOM!",'burn',4);
+const fireball = new skillMove(
+  "Fireball",
+  10,
+  5,
+  "Fireball goes BOOM!",
+  "burn",
+  4
+);
 const sword = new skillMove("Sword", 5, 0, "Sword goes whooosh!");
-const acid = new skillMove("Acid", 5, 0, "Acid goes SPLASH!",'poison',4);
+const acid = new skillMove("Acid", 5, 0, "Acid goes SPLASH!", "poison", 4);
 const zap = new skillMove("Zap", 5, 0, "Zapper does Zzzap");
 
-
 // Creating a movelist from the newly created skills
-let moveList = [fireball, sword,acid];
-let enemyMoveList = [fireball,sword,acid,zap]
+let moveList = [fireball, sword, acid];
+let enemyMoveList = [fireball, sword, acid, zap];
 
 //Function to start the game, running a few functions that create buttons based on the moveList and endTurn button
 const startGame = () => {
@@ -133,18 +133,15 @@ const startGame = () => {
   nextRound();
 };
 
-
 //Attack function
 
 const checkMana = (move, attacking) => {
-  return (move.manaCost<=attacking.mp);
-}
+  return move.manaCost <= attacking.mp;
+};
 
 const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
-
- 
 
   animateAttack(attacking);
   typeIt(
@@ -167,8 +164,8 @@ const attack = async (attacking, defending, move) => {
   console.log(`-------------------------------------------`);
 
   //If move has a status effect, let's add it!
-  if(move.statusName) {
-    addStatus(defending,move.statusName,move.statusDuration);
+  if (move.statusName) {
+    addStatus(defending, move.statusName, move.statusDuration);
   }
 
   attackingTurn = !attackingTurn;
@@ -185,57 +182,63 @@ const attack = async (attacking, defending, move) => {
   );
 };
 
-
-const findStatus = (character, statusName) =>{
-  for (let i =0; i<character.status.length;i++) {
-    if(character.status[i].statusName===statusName){
+const findStatus = (character, statusName) => {
+  for (let i = 0; i < character.status.length; i++) {
+    if (character.status[i].statusName === statusName) {
       return i;
     }
   }
   return -1;
-}
+};
 
- const addStatus= (characterAffected, statusName, statusDuration)=>{
-   //if character is not affected by this debuff yet:
-   if (findStatus(characterAffected,statusName)<0) {
-      characterAffected.status.push({statusName:statusName,statusDuration:statusDuration})
-   } else {
-  // if character has the debuff already, add to its duration
-let index =  findStatus(characterAffected,statusName) ;
+const addStatus = (characterAffected, statusName, statusDuration) => {
+  //if character is not affected by this debuff yet:
+  if (findStatus(characterAffected, statusName) < 0) {
+    characterAffected.status.push({
+      statusName: statusName,
+      statusDuration: statusDuration,
+    });
+  } else {
+    // if character has the debuff already, add to its duration
+    let index = findStatus(characterAffected, statusName);
     characterAffected.status[index].statusDuration += statusDuration;
- }};
-
-
-const checkStatus = async (character,statusName)=> {
-  if (findStatus(character,statusName)>=0){
-    let index= findStatus(character,statusName);
-        switch (character.status[index]['statusName']){
-          case 'burn':
-            if(character.status[index].statusDuration>0){
-            character.hp-=5;
-            character.status[index].statusDuration--;
-            playerHealth.setValue(player.hp);
-             enemyHealth.setValue(enemy.hp);
-            await typeIt(`${character.name} loses 5 hp in fact of a burn`,liveActionMessege);}
-          break;
-          case 'poison':
-            if(character.status[index].statusDuration>0) {
-            let dmg=character.status[index].statusDuration;
-            character.hp-=dmg;
-            character.status[index].statusDuration--;
-            playerHealth.setValue(player.hp);
-          enemyHealth.setValue(enemy.hp);
-          await typeIt(`${character.name} loses ${dmg} hp in fact of Poison`,liveActionMessege);}
-          break;
-          default:
-            console.log('no status effect')
-
-        }
-
   }
-}
+};
 
-
+const checkStatus = async (character, statusName) => {
+  if (findStatus(character, statusName) >= 0) {
+    let index = findStatus(character, statusName);
+    switch (character.status[index]["statusName"]) {
+      case "burn":
+        if (character.status[index].statusDuration > 0) {
+          character.hp -= 5;
+          character.status[index].statusDuration--;
+          playerHealth.setValue(player.hp);
+          enemyHealth.setValue(enemy.hp);
+          await typeIt(
+            `${character.name} loses 5 hp in fact of a burn`,
+            liveActionMessege
+          );
+        }
+        break;
+      case "poison":
+        if (character.status[index].statusDuration > 0) {
+          let dmg = character.status[index].statusDuration;
+          character.hp -= dmg;
+          character.status[index].statusDuration--;
+          playerHealth.setValue(player.hp);
+          enemyHealth.setValue(enemy.hp);
+          await typeIt(
+            `${character.name} loses ${dmg} hp in fact of Poison`,
+            liveActionMessege
+          );
+        }
+        break;
+      default:
+        console.log("no status effect");
+    }
+  }
+};
 
 const actionSelector = () => {
   // Clears old buttons
@@ -248,10 +251,15 @@ const actionSelector = () => {
     button.innerText = move.name;
     button.classList.add("btn", "moveBtn");
     button.addEventListener("click", () => {
-      if(checkMana(move, player)){
-      executingSelectedAction(move);}
-      else{console.log('mana issue')
-    typeIt(`You don't have enough mana. Pick another attack`,liveActionMessege)}
+      if (checkMana(move, player)) {
+        executingSelectedAction(move);
+      } else {
+        console.log("mana issue");
+        typeIt(
+          `You don't have enough mana. Pick another attack`,
+          liveActionMessege
+        );
+      }
     });
     actionButtons.appendChild(button);
   });
@@ -263,52 +271,57 @@ const nextRound = () => {
   button.classList.add("btn", "endTurnBtn");
   button.addEventListener("click", () => {
     executingSelectedAction("endTurn");
-    console.log('end of the turn')
+    console.log("end of the turn");
   });
   button.disabled = true;
   actionButtons.appendChild(button);
 };
 
-
 //randomized integer (index-like range froom 0 to max-1)
-const randomNum = (max,min=0) => {
-  return min+ Math.floor(Math.random()*(max-min))
-}
+const randomNum = (max, min = 0) => {
+  return min + Math.floor(Math.random() * (max - min));
+};
 
 const executingSelectedAction = async (selectedAction) => {
   const endTurnBtn = document.querySelector(".endTurnBtn");
 
   if (player.hp > 0 && enemy.hp > 0) {
-    
     // still playing
     if (attackingTurn) {
       Array.from(moveBtn).forEach((btn) => {
         btn.disabled = true;
       });
-      await checkStatus(player, 'burn');
-      await checkStatus(player, 'poison');
+      await checkStatus(player, "burn");
+      await checkStatus(player, "poison");
       console.log(`${player.name}'s turn to attack`);
       await attack(player, enemy, selectedAction); // Selected action is defined on each button
       endTurnBtn.disabled = false;
     }
     if (selectedAction === "endTurn") {
-      await checkStatus(enemy, 'burn');
-      await checkStatus(enemy, 'poison');
+      await checkStatus(enemy, "burn");
+      await checkStatus(enemy, "poison");
       endTurnBtn.disabled = true;
       console.log(`${enemy.name}'s turn to attack`);
-      await attack(enemy, player, enemyMoveList[randomNum(enemyMoveList.length)]);
+      await attack(
+        enemy,
+        player,
+        enemyMoveList[randomNum(enemyMoveList.length)]
+      );
       Array.from(moveBtn).forEach((btn) => {
         btn.disabled = false;
       });
     }
     if (player.hp <= 0) {
       await waitForMs(4000);
-      typeIt(`Congratz! You've just died!`,liveActionMessege)
+      typeIt(`Congratz! You've just died!`, liveActionMessege);
       console.log("You died!");
     }
     if (enemy.hp <= 0) {
       await waitForMs(4000);
-      typeIt(`Congratz! You've just defeat the ${enemy.name}`,liveActionMessege)
+      typeIt(
+        `Congratz! You've just defeat the ${enemy.name}`,
+        liveActionMessege
+      );
       console.log("You won!");
     }
   }
@@ -384,7 +397,6 @@ const combatLog = (combatMsg) => {
   const para = document.createElement("p");
   const text = document.createTextNode(combatMsg);
   para.appendChild(text);
-  //combatLogArea.appendChild(para);
   combatLogArea.prepend(para);
 };
 

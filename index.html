@@ -9,58 +9,59 @@
   </head>
   <body>
     <div class="content-desktop">
-    <div class="grid-container">
-     
+      <div class="grid-container">
         <div class="player-info-container">
-        <h2>Hero</h2>
-        <div class="hp-container-player">
+          <!-- Instert player info container here -->
+          <h2>Hero</h2>
+          <div class="hp-container-player">
             <div class="health-bar-player">
-              <div class="health-bar-value">
-              </div>
-              <div class="health-bar-fill">
-              </div>
+              <div class="health-bar-value"></div>
+              <div class="health-bar-fill"></div>
             </div>
+          </div>
         </div>
-      </div>
 
-      <div id="actionButtons" class="action-buttons">
-        <button class="btn">Button</button>
-      </div>
-          
-      <div class="vertical-line"></div>
-  
-      <div class="enemy-info-container">
-        <h2>Bad Guy</h2>
-        <div class="health-bar-enemy">
-          <div class="health-bar-value"></div>
-          <div class="health-bar-fill"></div>
-      </div>
-    </div>
+        <div id="actionButtons" class="action-buttons">
+          <button class="btn">Button</button>
+        </div>
+
+        <div class="vertical-line"></div>
+
+        <div class="enemy-info-container">
+          <!-- Instert enemy info container here -->
+          <h2>Bad Guy</h2>
+          <div class="health-bar-enemy">
+            <div class="health-bar-value"></div>
+            <div class="health-bar-fill"></div>
+          </div>
+        </div>
 
         <div class="enemy-character-container">
-        <img src="images/Alien_shooting.gif" alt="enemy" class="enemy-character">
+          <!-- Instert player character model here -->
         </div>
 
         <div class="player-character-container">
-        <img src="images/Alien_brainsout.gif" alt="hero" class="hero-character">
+          <!-- Instert player character model here -->
         </div>
 
         <div class="message-box-container">
-        <div id="messege_box">
-          <h1 id="move_counter">Round <span id="actual_move">0</span></h1>
-          <p id="live_action_messege"></p>
+          <div id="messege_box">
+            <h1 id="move_counter">Round <span id="actual_move">0</span></h1>
+            <p id="live_action_messege"></p>
+          </div>
         </div>
-      </div>
-     
-      <div class="horizontal-line"></div>
-      <div class="log-area-container">
-        <img src="images/TV.jpg" class="tv" alt="TV">
-        <div id="combatLogArea">
+
+        <div class="horizontal-line"></div>
+        <div class="log-area-container">
+          <img src="assets/PNG/TV.png" class="tv" alt="TV" />
+          <div id="combatLogArea"></div>
         </div>
       </div>
     </div>
-  </div>
+
+    <a href="/mummy" class="nav-link" data-link>Test link</a>
 
     <script src="main.js"></script>
+    <script type="module" src="./frontend/static/js/index.js"></script>
   </body>
 </html>
