@@ -117,10 +117,10 @@ const mage = new gameCharacter("Mage", 150, 50);
 const enemy = new gameCharacter("Bad guy", 100, 10);
 
 //skill moves workshop
-const fireball = new skillMove( "Fireball", 10, 2, "Fireball goes BOOM!");
+const fireball = new skillMove( "Fireball", 10, 5, "Fireball goes BOOM!",'burn',4);
 const sword = new skillMove("Sword", 5, 0, "Sword goes whooosh!");
 const acid = new skillMove("Acid", 5, 0, "Acid goes SPLASH!",'poison',4);
-const zap = new skillMove("Zap", 5, 0, "Sword goes whooosh!");
+const zap = new skillMove("Zap", 5, 0, "Zapper does Zzzap");
 
 
 // Creating a movelist from the newly created skills
@@ -136,9 +136,15 @@ const startGame = () => {
 
 //Attack function
 
+const checkMana = (move, attacking) => {
+  return (move.manaCost<=attacking.mp);
+}
+
 const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
+
+ 
 
   animateAttack(attacking);
   typeIt(
@@ -242,7 +248,10 @@ const actionSelector = () => {
     button.innerText = move.name;
     button.classList.add("btn", "moveBtn");
     button.addEventListener("click", () => {
-      executingSelectedAction(move);
+      if(checkMana(move, player)){
+      executingSelectedAction(move);}
+      else{console.log('mana issue')
+    typeIt(`You don't have enough mana. Pick another attack`,liveActionMessege)}
     });
     actionButtons.appendChild(button);
   });
@@ -293,10 +302,12 @@ const executingSelectedAction = async (selectedAction) => {
       });
     }
     if (player.hp <= 0) {
+      await waitForMs(4000);
       typeIt(`Congratz! You've just died!`,liveActionMessege)
       console.log("You died!");
     }
     if (enemy.hp <= 0) {
+      await waitForMs(4000);
       typeIt(`Congratz! You've just defeat the ${enemy.name}`,liveActionMessege)
       console.log("You won!");
     }
