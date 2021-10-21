@@ -109,7 +109,7 @@ button[disabled] {
 }
 .btn .tooltip-text {
   visibility: hidden;
-  height: 5rem;
+  height: auto;
   width: 13rem;
   background-color:black;
   color:#fff;

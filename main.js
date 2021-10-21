@@ -16,6 +16,10 @@ let messegeBox = document.querySelector("#messege_box"),
 let moveCount = 0;
 let attackingTurn = true;
 
+//randomized integer (index-like range froom 0 to max-1)
+const randomNum = (max, min = 0) => {
+  return min + Math.floor(Math.random() * (max - min));
+
 // set timeout for the selected amount of ms
 const waitForMs = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -97,11 +101,12 @@ class gameCharacter {
 
 //skillMove constructor
 class skillMove {
-  constructor(name, dmg, manaCost, msg, statusName, statusDuration) {
+  constructor(name, dmg, manaCost, msg,tooltipMsg, statusName, statusDuration) {
     this.name = name;
     this.dmg = dmg;
     this.manaCost = manaCost;
     this.msg = msg;
+    this.tooltipMsg = tooltipMsg;
     if (statusName) {
       this.statusName = statusName;
       this.statusDuration = statusDuration;
@@ -110,7 +115,7 @@ class skillMove {
 }
 
 //Character construction site
-const zombie = new gameCharacter("Zombie", 20, 20);
+const mummy = new gameCharacter("Mummy", 20, 20);
 const player = new gameCharacter("Hero", 100, 10);
 const mage = new gameCharacter("Mage", 150, 50);
 const enemy = new gameCharacter("mummy", 100, 10);
@@ -118,19 +123,26 @@ const enemy = new gameCharacter("mummy", 100, 10);
 //skill moves workshop
 const fireball = new skillMove(
   "Fireball",
-  10,
+  15,
   5,
-  "Fireball goes BOOM!",
+  'Fireball goes BOOM!',
+  'Powerfull spell which burns',
   "burn",
-  4
+  5
 );
-const sword = new skillMove("Sword", 5, 0, "Sword goes whooosh!");
-const acid = new skillMove("Acid", 5, 0, "Acid goes SPLASH!", "poison", 4);
-const zap = new skillMove("Zap", 5, 0, "Zapper does Zzzap");
+const gamepad = new skillMove("Gamepad", 5, 0, "Gamepad goes whooosh!", 'Light attack with a console controller');
+const acid = new skillMove("Acid", 2, 0, "Acid goes SPLASH!",'acid attack, cause poison', "poison", 5);
+const bubble = new skillMove("Bubble bomb", 10, 1, "Chewing gum explodes!",'Strong attack with a chewing gum,cause poison','poison',6);
+const bondage = new skillMove('Bandage ',7,0, 'Bandage Bondage!','medium attack with bandages');
+const screem = new skillMove('Screem',9,0, 'High pitch screem is painful','attack with a sonic wave');
+const zap = new skillMove('Zap',20,1, 'Zapper goes Zzzzap','Powerful shot from the Zapper');
+const lighter = new skillMove('Lighter',30,5, 'Lighter explodes. KABOOM!','Powerful lighter cause burn ','burn', 6);
+const jab = new skillMove('Jab',randomNum(40,1),0, 'Surprising skill','pretty random Jab');
+
 
 // Creating a movelist from the newly created skills
-let moveList = [fireball, sword, acid];
-let enemyMoveList = [fireball, sword, acid, zap];
+let moveList = [gamepad, bubble,lighter,jab];
+let enemyMoveList = [ bondage, acid, zap, screem];
 
 //Function to start the game, running a few functions that create buttons based on the moveList and endTurn button
 const loadGame = () => {
@@ -148,8 +160,8 @@ const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
 
-  //console.log(attacking);
-  animateAttack(attacking);
+  //animateAttack(attacking);
+
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
     liveActionMessege
@@ -254,7 +266,9 @@ const actionSelector = () => {
   // Creates new buttons form each element in the moveList with a event listener to execute that move
   moveList.forEach((move) => {
     const button = document.createElement("button");
-    button.innerHTML = ` ${move.name} <span class='tooltip-text'> ${move.manaCost} MP and ${move.msg}</span>`;
+
+    button.innerHTML =` ${move.name} <span class='tooltip-text'>costs ${move.manaCost} MP.  ${move.tooltipMsg}</span>`;
+
     button.classList.add("btn", "moveBtn");
 
     button.addEventListener("click", () => {
@@ -284,10 +298,7 @@ const nextRound = () => {
   actionButtons.appendChild(button);
 };
 
-//randomized integer (index-like range froom 0 to max-1)
-const randomNum = (max, min = 0) => {
-  return min + Math.floor(Math.random() * (max - min));
-};
+
 
 const executingSelectedAction = async (selectedAction) => {
   const endTurnBtn = document.querySelector(".endTurnBtn");
@@ -356,12 +367,12 @@ class healthBarPlayer {
   }
 
   update() {
-    const percentage = this.value + "%";
-    this.fillElem.style.width = percentage;
-    this.valueElem.textContent = percentage;
-    if (this.value <= 50 && this.value >= 31) {
+    const percentage = this.value*100/player.maxHp ;
+    this.fillElem.style.width = percentage + "%";
+    this.valueElem.textContent = this.value + '/' + player.maxHp;
+    if (percentage <= 50 && percentage >= 31) {
       this.fillElem.style.background = "#FFBF00";
-    } else if (this.value < 30) {
+    } else if (percentage < 30) {
       this.fillElem.style.background = "#C41E3A";
     }
   }
@@ -403,9 +414,9 @@ class healthBarEnemy {
   constructor(element, initialValue = enemy.hp) {
     this.valueElem = element.querySelector(".health-bar-value");
     this.fillElem = element.querySelector(".health-bar-fill");
-    if (this.value <= 50 && this.value >= 31) {
+    if (this.value*100/enemy.maxHp <= 50 && this.value*100/enemy.maxHp >= 31) {
       this.fillElem.style.background = "#FFBF00";
-    } else if (this.value < 30) {
+    } else if (this.value*100/enemy.maxHp < 30) {
       this.fillElem.style.background = "#C41E3A";
     }
 
@@ -422,12 +433,12 @@ class healthBarEnemy {
   }
 
   update() {
-    const percentage = this.value + "%";
-    this.fillElem.style.width = percentage;
-    this.valueElem.textContent = percentage;
-    if (this.value <= 50 && this.value >= 31) {
+    const percentage = this.value*100/enemy.maxHp;
+    this.fillElem.style.width = percentage + '%';
+    this.valueElem.textContent = this.value +'/'+ enemy.maxHp;
+    if (percentage <= 50 && percentage>= 31) {
       this.fillElem.style.background = "#FFBF00";
-    } else if (this.value < 30) {
+    } else if (percentage < 30) {
       this.fillElem.style.background = "#C41E3A";
     }
   }
