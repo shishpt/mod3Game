@@ -1,3 +1,7 @@
+/* The 404 site is currently not used since there is not a server handling the web requests
+  so it's only possible to navigate from the root, 
+  although this would be useful when adding a server handled route sometime in the future
+*/
 import abstractView from "./abstractView.js";
 
 export default class extends abstractView {

@@ -16,6 +16,11 @@ let messegeBox = document.querySelector("#messege_box"),
 let moveCount = 0;
 let attackingTurn = true;
 
+// set timeout for the selected amount of ms
+const waitForMs = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 //VISUAL UTILITIES
 
 //Animating characters during attacks
@@ -34,10 +39,6 @@ const animateAttack = async (character) => {
     await waitForMs(1400);
     enemyCharacterImage.src = basicStance;
   }
-};
-// set timeout for the selected amount of ms
-const waitForMs = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 //Typewriter function

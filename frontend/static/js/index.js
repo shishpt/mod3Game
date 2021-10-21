@@ -1,7 +1,6 @@
 import startGame from "./views/startGame.js";
 import mummy from "./views/mummy.js";
 import err404 from "./views/err404.js";
-//import { waitForMs } from "../../../main.js";
 
 export const waitForMs = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));

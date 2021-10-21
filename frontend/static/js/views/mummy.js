@@ -1,5 +1,18 @@
+/*
+  The Mummy view and any view for an enemy will be quite simular
+  Here is a kind of "flowchart" of what the code is doing
+  * setTitle is used from the abstractView to set the title of the current view
+  * Running the animation
+  * Resetting the body HTML to the battle scene
+  * load main.js to the view
+  * Importing stuff that is unique to this view
+    * images of the enemy
+    * healthbars
+*/
+
 import abstractView from "./abstractView.js";
 import { waitForMs } from "../index.js";
+import { resetHTML } from "./resetHTMLBody.js";
 
 const body = document.querySelector("body");
 
@@ -25,76 +38,7 @@ export default class extends abstractView {
   }
 
   async resetBody() {
-    return (body.innerHTML = `<!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="style.css" />
-        <title>PokeDex RPG</title>
-      </head>
-      <body>
-        <div class="content-desktop">
-          <div class="grid-container">
-            <div class="player-info-container">
-              <!-- Instert player info container here -->
-              <h2>Hero</h2>
-              <div class="hp-container-player">
-                <div class="health-bar-player">
-                  <div class="health-bar-value"></div>
-                  <div class="health-bar-fill"></div>
-                </div>
-                <div class="mana-bar-player">
-                  <div class="mana-bar-value"></div>
-                  <div class="mana-bar-fill"></div>
-                </div>
-              </div>
-            </div>
-    
-            <div id="actionButtons" class="action-buttons">
-              <button class="btn">Button</button>
-            </div>
-    
-            <div class="vertical-line"></div>
-    
-            <div class="enemy-info-container">
-              <!-- Instert enemy info container here -->
-              <h2>Bad Guy</h2>
-              <div class="health-bar-enemy">
-                <div class="health-bar-value"></div>
-                <div class="health-bar-fill"></div>
-              </div>
-            </div>
-    
-            <div class="enemy-character-container">
-              <!-- Instert enemy character model here -->
-            </div>
-    
-            <div class="player-character-container">
-              <!-- Instert player character model here -->
-            </div>
-    
-            <div class="message-box-container">
-              <div id="messege_box">
-                <h1 id="move_counter">Round <span id="actual_move">0</span></h1>
-                <p id="live_action_messege"></p>
-              </div>
-            </div>
-    
-            <div class="horizontal-line"></div>
-            <div class="log-area-container">
-              <img src="assets/PNG/TV.png" class="tv" alt="TV" />
-              <div id="combatLogArea"></div>
-            </div>
-          </div>
-        </div>
-    
-        <!-- <script type="module" src="main.js"></script> -->
-        <script type="module" src="./frontend/static/js/index.js"></script>
-      </body>
-    </html>
-    `);
+    return (body.innerHTML = resetHTML);
   }
 
   async loadScript() {
