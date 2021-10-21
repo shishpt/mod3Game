@@ -19,6 +19,7 @@ const router = async () => {
     { path: "/404", view: err404 },
     { path: "/mummy", view: mummy },
     { path: "/win", view: win },
+    { path: "/loss", view: loss },
   ];
 
   // Test each route for potential match
