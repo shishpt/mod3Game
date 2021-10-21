@@ -12,15 +12,17 @@ let messegeBox = document.querySelector("#messege_box"),
   heroNameTag = document.querySelector("#hero-name"),
   enemyNameTag = document.querySelector("#enemy-name");
 
-
 // Game start setup
 let moveCount = 0;
 let attackingTurn = true;
 
-
 //randomized integer (index-like range froom 0 to max-1)
 const randomNum = (max, min = 0) => {
   return min + Math.floor(Math.random() * (max - min));
+
+// set timeout for the selected amount of ms
+const waitForMs = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 //VISUAL UTILITIES
@@ -28,23 +30,21 @@ const randomNum = (max, min = 0) => {
 //Animating characters during attacks
 
 const animateAttack = async (character) => {
-  char = character;
+  let charName = character.name;
+  let playerName = player.name;
 
-  if (character === player) {
+  if (charName === playerName) {
     let basicStance = heroCharacterImage.src;
     heroCharacterImage.src = "/assets/GIF/hero_attacking.gif";
     await waitForMs(1400);
     heroCharacterImage.src = basicStance;
   } else {
     let basicStance = enemyCharacterImage.src;
+    console.log(character.name);
     enemyCharacterImage.src = `/assets/GIF/${character.name}_attacking.gif`;
-    await waitForMs(1400);
+    await waitForMs(2000);
     enemyCharacterImage.src = basicStance;
   }
-};
-// set timeout for the selected amount of ms
-const waitForMs = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 //Typewriter function
@@ -118,8 +118,7 @@ class skillMove {
 const mummy = new gameCharacter("Mummy", 20, 20);
 const player = new gameCharacter("Hero", 100, 10);
 const mage = new gameCharacter("Mage", 150, 50);
-let enemy = new gameCharacter("Bad guy", 100, 10);
-
+const enemy = new gameCharacter("mummy", 100, 10);
 
 //skill moves workshop
 const fireball = new skillMove(
@@ -162,6 +161,7 @@ const attack = async (attacking, defending, move) => {
   let moveName = move.name;
 
   //animateAttack(attacking);
+
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
     liveActionMessege
@@ -237,7 +237,6 @@ const checkStatus = async (character, statusName) => {
             `${character.name} loses 5 hp in fact of a burn`,
             liveActionMessege
           );
-          
         }
         break;
       case "poison":
@@ -266,11 +265,12 @@ const actionSelector = () => {
   }
   // Creates new buttons form each element in the moveList with a event listener to execute that move
   moveList.forEach((move) => {
- 
     const button = document.createElement("button");
+
     button.innerHTML =` ${move.name} <span class='tooltip-text'>costs ${move.manaCost} MP.  ${move.tooltipMsg}</span>`;
+
     button.classList.add("btn", "moveBtn");
-   
+
     button.addEventListener("click", () => {
       if (checkMana(move, player)) {
         executingSelectedAction(move);
@@ -382,7 +382,6 @@ const playerHealth = new healthBarPlayer(
   document.querySelector(".health-bar-player")
 );
 
-
 class manaBarPlayer {
   constructor(element, initialValue = player.mp) {
     this.valueElem = element.querySelector(".mana-bar-value");
@@ -401,9 +400,9 @@ class manaBarPlayer {
   }
 
   update() {
-    const percentage = this.value *100/player.maxMP  + "%";
+    const percentage = (this.value * 100) / player.maxMP + "%";
     this.fillElem.style.width = percentage;
-    this.valueElem.textContent = this.value + '/' +player.maxMP;
+    this.valueElem.textContent = this.value + "/" + player.maxMP;
   }
 }
 
