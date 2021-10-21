@@ -1,2 +1,16 @@
-# mod3Game
-Module 3 project:  Create a game written primarily in vanilla JS.
+# Videodrome
+
+## About
+
+Videodrome is a turn-based video game written as a Single page application (SPA) with Vanilla JS
+
+## Techstack
+
+- HTML
+- CSS
+- Javascript
+- Github for project management
+
+### Live link
+
+[Videodrome game](https://videodrome.thorbergur.me/)
