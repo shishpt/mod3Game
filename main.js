@@ -1,3 +1,5 @@
+import { navigateTo } from "./frontend/static/js/index.js";
+
 //  HTML node Selecting zone
 
 let messegeBox = document.querySelector("#messege_box"),
@@ -221,7 +223,7 @@ const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
 
-  //animateAttack(attacking);
+  animateAttack(attacking);
 
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,
@@ -390,8 +392,9 @@ const executingSelectedAction = async (selectedAction) => {
     }
     if (player.hp <= 0) {
       await waitForMs(4000);
-      typeIt(`Congratz! You've just died!`, liveActionMessege);
+      typeIt(`You've just died!`, liveActionMessege);
       console.log("You died!");
+      navigateTo("/loss");
     }
     if (enemy.hp <= 0) {
       await waitForMs(4000);
@@ -400,6 +403,7 @@ const executingSelectedAction = async (selectedAction) => {
         liveActionMessege
       );
       console.log("You won!");
+      navigateTo("/win");
     }
   }
 };

@@ -1,6 +1,8 @@
 import startGame from "./views/startGame.js";
 import mummy from "./views/mummy.js";
 import err404 from "./views/err404.js";
+import win from "./views/win.js";
+import loss from "./views/loss.js";
 
 export const waitForMs = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -16,6 +18,7 @@ const router = async () => {
     { path: "/startGame", view: startGame },
     { path: "/404", view: err404 },
     { path: "/mummy", view: mummy },
+    { path: "/win", view: win },
   ];
 
   // Test each route for potential match
