@@ -26,17 +26,19 @@ const waitForMs = (ms) => {
 //Animating characters during attacks
 
 const animateAttack = async (character) => {
-  char = character;
+  let charName = character.name;
+  let playerName = player.name;
 
-  if (character === player) {
+  if (charName === playerName) {
     let basicStance = heroCharacterImage.src;
     heroCharacterImage.src = "/assets/GIF/hero_attacking.gif";
     await waitForMs(1400);
     heroCharacterImage.src = basicStance;
   } else {
     let basicStance = enemyCharacterImage.src;
+    console.log(character.name);
     enemyCharacterImage.src = `/assets/GIF/${character.name}_attacking.gif`;
-    await waitForMs(1400);
+    await waitForMs(2000);
     enemyCharacterImage.src = basicStance;
   }
 };
@@ -111,7 +113,7 @@ class skillMove {
 const zombie = new gameCharacter("Zombie", 20, 20);
 const player = new gameCharacter("Hero", 100, 10);
 const mage = new gameCharacter("Mage", 150, 50);
-const enemy = new gameCharacter("Bad guy", 100, 10);
+const enemy = new gameCharacter("mummy", 100, 10);
 
 //skill moves workshop
 const fireball = new skillMove(
@@ -146,7 +148,7 @@ const attack = async (attacking, defending, move) => {
   let message = move.msg;
   let moveName = move.name;
 
-  console.log(attacking);
+  //console.log(attacking);
   animateAttack(attacking);
   typeIt(
     `${message} ${attacking.name} dealt ${move.dmg} with ${moveName} to ${defending.name}`,

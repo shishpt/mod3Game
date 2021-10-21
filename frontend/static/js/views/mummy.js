@@ -67,7 +67,7 @@ export default class extends abstractView {
   }
   async heroStatic() {
     return `
-    <img src="assets/PNG/Thumbnail-Hero.png" alt="enemy" class="enemy-character"/>
+    <img src="assets/PNG/Hero.png" alt="hero" class="hero-character"/>
     `;
   }
   async heroAttacking() {
@@ -76,3 +76,8 @@ export default class extends abstractView {
     `;
   }
 }
+
+// if hero hp is down to 0, navigate to rip screen
+// if () {
+
+// }
