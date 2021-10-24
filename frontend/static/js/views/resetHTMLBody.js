@@ -1,4 +1,4 @@
-export const resetHTML = `
+export const resetHTML = /*html*/ `
   <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -25,13 +25,13 @@ export const resetHTML = `
               </div>
             </div>
           </div>
-  
+
           <div id="actionButtons" class="action-buttons">
             <button class="btn">Button</button>
           </div>
-  
+
           <div class="vertical-line"></div>
-  
+
           <div class="enemy-info-container">
             <!-- Instert enemy info container here -->
             <h2>Bad Guy</h2>
@@ -40,22 +40,22 @@ export const resetHTML = `
               <div class="health-bar-fill"></div>
             </div>
           </div>
-  
+
           <div class="enemy-character-container">
             <!-- Instert enemy character model here -->
           </div>
-  
+
           <div class="player-character-container">
             <!-- Instert player character model here -->
           </div>
-  
+
           <div class="message-box-container">
             <div id="messege_box">
               <h1 id="move_counter">Round <span id="actual_move">0</span></h1>
               <p id="live_action_messege"></p>
             </div>
           </div>
-  
+
           <div class="horizontal-line"></div>
           <div class="log-area-container">
             <img src="assets/PNG/TV.png" class="tv" alt="TV" />
@@ -63,9 +63,9 @@ export const resetHTML = `
           </div>
         </div>
       </div>
-  
+
       <!-- <script type="module" src="main.js"></script> -->
       <script type="module" src="./frontend/static/js/index.js"></script>
     </body>
   </html>
-    `;
+`;

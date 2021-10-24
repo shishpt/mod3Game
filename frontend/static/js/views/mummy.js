@@ -76,8 +76,3 @@ export default class extends abstractView {
     `;
   }
 }
-
-// if hero hp is down to 0, navigate to rip screen
-// if () {
-
-// }
